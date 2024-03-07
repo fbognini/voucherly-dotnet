@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="d-flex justify-content-center align-items-center w-100 vh-100">
+    <div class="card" style="width: 18rem;">
+      <img src="https://source.unsplash.com/kcA-c3f_3FE" class="card-img-top" alt="Bowl">
+      <div class="card-body">
+        <h5 class="card-title">Fresh bowl<span class="badge bg-secondary float-end">7 €</span></h5>
+        <form asp-controller="Pay" asp-action="Init" method="POST">
+            <button class="btn btn-primary" type="submit" id="checkout-button">Checkout</button>
+        </form>
+      </div>
+    </div>
+</div>

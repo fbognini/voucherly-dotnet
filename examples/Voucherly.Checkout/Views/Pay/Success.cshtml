@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Success";
+}
+<div class="alert alert-primary" role="alert">
+    @ViewData["Title"]
+</div>
+
+<form asp-action="Index" asp-controller="Home" method="GET">
+    <button class="btn btn-primary" type="submit" >Home</button>
+</form>
