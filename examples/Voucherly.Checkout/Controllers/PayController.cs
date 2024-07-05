@@ -8,12 +8,12 @@ namespace Voucherly.Checkout.Controllers;
 public class PayController : Controller
 {
     private readonly ILogger<PayController> _logger;
-    private readonly IVoucherlyApiService _VoucherlyApiService;
+    private readonly IVoucherlyApiService _voucherlyApiService;
 
     public PayController(ILogger<PayController> logger, IVoucherlyApiService VoucherlyApiService)
     {
         _logger = logger;
-        _VoucherlyApiService = VoucherlyApiService;
+        _voucherlyApiService = VoucherlyApiService;
     }
 
     [HttpPost]
@@ -45,7 +45,7 @@ public class PayController : Controller
 
         try
         {
-            var payment = await _VoucherlyApiService.CreatePayment(request);
+            var payment = await _voucherlyApiService.CreatePayment(request);
             return new RedirectResult(payment.CheckoutUrl!);
         }
         catch (ApiException ex)

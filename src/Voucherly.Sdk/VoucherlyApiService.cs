@@ -1,15 +1,14 @@
 ﻿using fbognini.Sdk;
-using fbognini.Sdk.Interfaces;
 using fbognini.Sdk.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Voucherly.Sdk.Endpoints;
+using Voucherly.Sdk.Models.PaymentGateways;
 using Voucherly.Sdk.Models.PaymentMethods;
 using Voucherly.Sdk.Models.Payments;
 using Voucherly.Sdk.Requests;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Voucherly.Sdk
 {
@@ -28,6 +27,10 @@ namespace Voucherly.Sdk
         Task<List<PaymentMethod>> GetCustomerPaymentMethods(string id);
         Task DeletePaymentMethod(string customerId, string id);
 
+        #endregion
+
+        #region Payment Gateways
+        Task<PaymentGatewaysResponse> GetPaymentGateways(GetPaymentGatewaysRequest request);
         #endregion
     }
 
@@ -93,6 +96,11 @@ namespace Voucherly.Sdk
         public async Task DeletePaymentMethod(string customerId, string id)
         {
             await DeleteApi(CustomerEndpoints.DeletePaymentMethod(customerId, id));
+        }
+
+        public async Task<PaymentGatewaysResponse> GetPaymentGateways(GetPaymentGatewaysRequest request)
+        {
+            return await GetApi<PaymentGatewaysResponse>(PaymentGatewayEndpoints.GetPaymentGateways(request.All, request.Includes ?? Enumerable.Empty<PaymentGatewayIncludes>()));
         }
     }
 }
