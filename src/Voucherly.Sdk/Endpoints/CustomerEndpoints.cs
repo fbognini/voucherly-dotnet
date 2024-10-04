@@ -11,9 +11,9 @@ namespace Voucherly.Sdk.Endpoints
     {
         private const string Endpoint = "customers";
 
-        public static string GetPaymentMethods(string id) => $"v1/{Endpoint}/{id}/payment-methods";
+        public static string GetPaymentMethods(string id) => $"v1/{Endpoint}/{id}/payment_methods";
 
-        public static string DeletePaymentMethod(string customerId, string id) => $"v1/{Endpoint}/{customerId}/payment-methods/{id}";
+        public static string DeletePaymentMethod(string customerId, string id) => $"v1/{Endpoint}/{customerId}/payment_methods/{id}";
 
         public static string GetWalletMovements(List<string>? customerIds, DateTime? fromUtc, DateTime? toUtc, int? page, int? length)
         {
