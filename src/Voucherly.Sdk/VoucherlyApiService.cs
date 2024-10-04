@@ -1,10 +1,10 @@
 ﻿using fbognini.Sdk;
 using fbognini.Sdk.Models;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Voucherly.Sdk.Endpoints;
+using Voucherly.Sdk.Models.Customers;
 using Voucherly.Sdk.Models.PaymentGateways;
 using Voucherly.Sdk.Models.PaymentMethods;
 using Voucherly.Sdk.Models.Payments;
@@ -26,6 +26,7 @@ namespace Voucherly.Sdk
 
         Task<List<PaymentMethod>> GetCustomerPaymentMethods(string id);
         Task DeletePaymentMethod(string customerId, string id);
+        Task<PaginationResponse<CustomerWalletRow>> GetCustomerWalletMovements(GetCustomerWalletMovementsRequest request);
 
         #endregion
 
@@ -38,8 +39,8 @@ namespace Voucherly.Sdk
     {
         private InternalVoucherlyApiSettings settings;
 
-        public VoucherlyApiService(HttpClient client, ILogger<VoucherlyApiService> logger, IOptions<InternalVoucherlyApiSettings> options)
-            : base(client, logger, options: new JsonSerializerOptions()
+        public VoucherlyApiService(HttpClient client, IOptions<InternalVoucherlyApiSettings> options)
+            : base(client, options: new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 Converters = { new JsonStringEnumConverter() },
@@ -70,37 +71,42 @@ namespace Voucherly.Sdk
                 options.Headers.Add("Voucherly-Wait-Time", request.VoucherlyWaitTime.Value.ToString());
             }
 
-            return await GetApi<Payment>(PaymentEndpoints.GetPayment(id, request?.Includes ?? Enumerable.Empty<PaymentIncludes>()));
+            return await GetApiAsync<Payment>(PaymentEndpoints.GetPayment(id, request?.Includes ?? Enumerable.Empty<PaymentIncludes>()));
         }
 
         public async Task<Payment> CreatePayment(CreatePaymentRequest request)
         {
-            return await PostApi<Payment, CreatePaymentRequest>(PaymentEndpoints.CreatePayment(), request);
+            return await PostApiAsync<Payment, CreatePaymentRequest>(PaymentEndpoints.CreatePayment(), request);
         }
 
         public async Task<Payment> ConfirmPayment(string id)
         {
-            return await PostApi<Payment>(PaymentEndpoints.ConfirmPayment(id));
+            return await PostApiAsync<Payment>(PaymentEndpoints.ConfirmPayment(id));
         }
 
         public async Task<Payment> RefundPayment(string id)
         {
-            return await PostApi<Payment>(PaymentEndpoints.RefundPayment(id));
+            return await PostApiAsync<Payment>(PaymentEndpoints.RefundPayment(id));
         }
 
         public async Task<List<PaymentMethod>> GetCustomerPaymentMethods(string id)
         {
-            return await GetApi<List<PaymentMethod>>(CustomerEndpoints.GetPaymentMethods(id));
+            return await GetApiAsync<List<PaymentMethod>>(CustomerEndpoints.GetPaymentMethods(id));
         }
 
         public async Task DeletePaymentMethod(string customerId, string id)
         {
-            await DeleteApi(CustomerEndpoints.DeletePaymentMethod(customerId, id));
+            await DeleteApiAsync(CustomerEndpoints.DeletePaymentMethod(customerId, id));
+        }
+
+        public async Task<PaginationResponse<CustomerWalletRow>> GetCustomerWalletMovements(GetCustomerWalletMovementsRequest request)
+        {
+            return await GetApiAsync<PaginationResponse<CustomerWalletRow>>(CustomerEndpoints.GetWalletMovements(request.CustomerIds, request.FromUtc, request.ToUtc, request.Page, request.Length));
         }
 
         public async Task<PaymentGatewaysResponse> GetPaymentGateways(GetPaymentGatewaysRequest request)
         {
-            return await GetApi<PaymentGatewaysResponse>(PaymentGatewayEndpoints.GetPaymentGateways(request.All, request.Includes ?? Enumerable.Empty<PaymentGatewayIncludes>()));
+            return await GetApiAsync<PaymentGatewaysResponse>(PaymentGatewayEndpoints.GetPaymentGateways(request.All, request.Includes ?? Enumerable.Empty<PaymentGatewayIncludes>()));
         }
     }
 }
