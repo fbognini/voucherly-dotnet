@@ -24,9 +24,8 @@ namespace Voucherly.Sdk
 
         #region Customer
 
-        Task<List<PaymentMethod>> GetCustomerPaymentMethods(string id);
+        Task<PaginationResponse<PaymentMethod>> GetCustomerPaymentMethods(string id);
         Task DeletePaymentMethod(string customerId, string id);
-        Task<PaginationResponse<CustomerWalletRow>> GetCustomerWalletMovements(GetCustomerWalletMovementsRequest request);
 
         #endregion
 
@@ -89,19 +88,14 @@ namespace Voucherly.Sdk
             return await PostApiAsync<Payment>(PaymentEndpoints.RefundPayment(id));
         }
 
-        public async Task<List<PaymentMethod>> GetCustomerPaymentMethods(string id)
+        public async Task<PaginationResponse<PaymentMethod>> GetCustomerPaymentMethods(string id)
         {
-            return await GetApiAsync<List<PaymentMethod>>(CustomerEndpoints.GetPaymentMethods(id));
+            return await GetApiAsync<PaginationResponse<PaymentMethod>>(CustomerEndpoints.GetPaymentMethods(id));
         }
 
         public async Task DeletePaymentMethod(string customerId, string id)
         {
             await DeleteApiAsync(CustomerEndpoints.DeletePaymentMethod(customerId, id));
-        }
-
-        public async Task<PaginationResponse<CustomerWalletRow>> GetCustomerWalletMovements(GetCustomerWalletMovementsRequest request)
-        {
-            return await GetApiAsync<PaginationResponse<CustomerWalletRow>>(CustomerEndpoints.GetWalletMovements(request.CustomerIds, request.FromUtc, request.ToUtc, request.Page, request.Length));
         }
 
         public async Task<PaymentGatewaysResponse> GetPaymentGateways(GetPaymentGatewaysRequest request)
