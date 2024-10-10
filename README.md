@@ -35,6 +35,14 @@ From within Visual Studio:
 
 For a comprehensive list of examples, check out the [API documentation][api-docs].
 
+## Development
 
-[voucherly]: https://voucherly.it
+For any requests, bug or comments, please [open an issue][issues] or [submit a pull request][pulls].
+
 [api-docs]: https://docs.voucherly.it
+[dotnet-core-cli-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/
+[issues]: https://github.com/voucherly/voucherly-dotnet/issues/new
+[nuget-cli]: https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference
+[package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
+[pulls]: https://github.com/voucherly/voucherly-dotnet/pulls
+[voucherly]: https://voucherly.it
