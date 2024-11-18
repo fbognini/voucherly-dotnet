@@ -11,7 +11,7 @@ namespace Voucherly.Sdk
     {
         public static IServiceCollection AddVoucherlyApiService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<InternalVoucherlyApiSettings>(configuration.GetSection(nameof(VoucherlyApiSettings)));
+            services.Configure<VoucherlyApiSettings>(configuration.GetSection(nameof(VoucherlyApiSettings)));
 
             services.AddHttpClient<IVoucherlyApiService, VoucherlyApiService>()
                 .ThrowApiExceptionIfNotSuccess()

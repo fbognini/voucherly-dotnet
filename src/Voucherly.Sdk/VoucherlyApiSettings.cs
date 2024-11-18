@@ -4,9 +4,4 @@
     {
         public string ApiKey { get; set; } = string.Empty;
     }
-
-    internal class InternalVoucherlyApiSettings
-    {
-        public string ApiKey { get; set; } = string.Empty;
-    }
 }

@@ -14,6 +14,13 @@ namespace Voucherly.Sdk
 {
     public interface IVoucherlyApiService
     {
+
+        static JsonSerializerOptions JsonSerializerOptions => new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters = { new JsonStringEnumConverter() },
+        };
+
         #region Payments
         Task<Payment> CreatePayment(CreatePaymentRequest request);
         Task<Payment> ConfirmPayment(string id);
@@ -36,30 +43,15 @@ namespace Voucherly.Sdk
 
     internal class VoucherlyApiService : BaseApiService, IVoucherlyApiService
     {
-        private InternalVoucherlyApiSettings settings;
+        private VoucherlyApiSettings settings;
 
-        public VoucherlyApiService(HttpClient client, IOptions<InternalVoucherlyApiSettings> options)
-            : base(client, options: new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new JsonStringEnumConverter() },
-            })
+        public VoucherlyApiService(HttpClient client, IOptions<VoucherlyApiSettings> options)
+            : base(client, options: IVoucherlyApiService.JsonSerializerOptions)
         {
             settings = options.Value;
-            ChangeSettings(settings);
-        }
 
-        private void ChangeSettings(InternalVoucherlyApiSettings settings)
-        {
-            if (settings is null)
-            {
-                return;
-            }
-
-            client.BaseAddress = new Uri("https://api.voucherly.it/");
-            client.DefaultRequestHeaders.Add("Voucherly-API-Key", settings.ApiKey);
-
-            this.settings = settings;
+            this.client.BaseAddress = new Uri("https://api.voucherly.it/");
+            this.client.DefaultRequestHeaders.Add("Voucherly-API-Key", settings.ApiKey);
         }
 
         public async Task<Payment> GetPayment(string id, GetPaymentRequest request)
