@@ -28,13 +28,13 @@ public class PayController : Controller
             CustomerEmail = "mario.red@gmail.com",
             Lines = new List<CreatePaymentRequest.PaymentLine>()
             {
-                new CreatePaymentRequest.PaymentLine()
+                new()
                 {
                     IsFood = true,
-                    ProductImage = "https://source.unsplash.com/kcA-c3f_3FE",
+                    ProductImage = "https://ucarecdn.com/76a940de-f611-479d-9fc4-bd348dc27f53/-/preview/200x200/",
                     Quantity = 1,
                     ProductName = "Fresh bowl",
-                    UnitAmount = 700,
+                    UnitAmount = 790,
                 }
 
             },
@@ -50,7 +50,7 @@ public class PayController : Controller
         }
         catch (ApiException ex)
         {
-            return BadRequest(ex.Response);
+            return BadRequest(ex.Content);
         }
     }
 
