@@ -8,7 +8,6 @@
 	
 	<PropertyGroup>
 		<Description>The official Voucherly .NET library, supporting .NET 6.0+.</Description>
-		<PackageId>Voucherly</PackageId>
 		<Version>1.4.0</Version>
 		<Authors>Voucherly, Francesco Bognini</Authors>
 		<Company>Voucherly</Company>
