@@ -11,6 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{F9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voucherly.Checkout", "examples\Voucherly.Checkout\Voucherly.Checkout.csproj", "{7C47D303-0E71-48F0-83DA-635409F71ED1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10D49B85-E4B7-45D7-AC14-F3520029EE88}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\publish-nuget.yml = .github\workflows\publish-nuget.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

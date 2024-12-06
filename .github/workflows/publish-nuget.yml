@@ -1,0 +1,63 @@
+name: Publish NuGet Package
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    name: Build and test
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: [6.0, 7.0, 8.0] # Define the .NET versions to test and publis
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }} 
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet build --configuration Release /p:ContinuousIntegrationBuild=true
+
+    - name: Pack the NuGet package
+      run: dotnet pack --configuration Release --no-build --output ./nupkg
+
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget
+        path: nuget/
+
+  publish:
+    name: Publish
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget
+        path: nuget
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Publish NuGet packages to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        NUGET_SOURCE: ${{ secrets.NUGET_SOURCE || 'https://api.nuget.org/v3/index.json' }}
+      run: |
+        dotnet nuget push ./nupkg/*.nupkg \
+          --api-key $NUGET_API_KEY \
+          --source $NUGET_SOURCE
