@@ -11,10 +11,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        dotnet-version: [6.0, 7.0, 8.0] # Define the .NET versions to test and publis
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -27,13 +23,16 @@ jobs:
           7.0.404
           8.0.x
 
-    - name: Get release version
-      run: echo "RELEASE_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+    - name: Extract and process release version
+      run: |
+        RELEASE_VERSION="${GITHUB_REF##*/}"
+        CLEAN_VERSION="${RELEASE_VERSION#v}" # Remove the "v" prefix if it exists
+        echo "CLEAN_VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
 
     - name: Validate version format
       run: |
-        if [[ ! $RELEASE_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
-          echo "Invalid version format: $RELEASE_VERSION"
+        if [[ ! "$CLEAN_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
+          echo "Invalid version format: CLEAN_VERSION "
           exit 1
         fi
 
