@@ -39,8 +39,8 @@ public class PayController : Controller
 
             },
             Mode = Sdk.Models.Payments.PaymentMode.Payment,
-            RedirectSuccessUrl = Url.Action("Success", "Pay", null, HttpContext.Request.Scheme)!,
-            RedirectErrorUrl = Url.Action("Error", "Pay", null, HttpContext.Request.Scheme)!,
+            RedirectOkUrl = Url.Action("Success", "Pay", null, HttpContext.Request.Scheme)!,
+            RedirectKoUrl = Url.Action("Error", "Pay", null, HttpContext.Request.Scheme)!,
         };
 
         try
