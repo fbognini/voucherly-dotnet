@@ -4,13 +4,20 @@
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<Description>The official Voucherly .NET library, supporting .NET 6.0+.</Description>
+		<PackageId>Voucherly</PackageId>
 		<Version>1.4.0</Version>
-		<Authors>Francesco Bognini</Authors>
-		<Company>Francesco Bognini</Company>
+		<Authors>Voucherly, Francesco Bognini</Authors>
+		<Company>Voucherly</Company>
+		<PackageTags>voucherly;payment;credit;cards;money;gateway;buoni pasto</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>https://github.com/fbognini/Voucherly.Sdk</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/fbognini/Voucherly.Sdk</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/voucherly/voucherly-dotnet-sdk</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/voucherly/voucherly-dotnet-sdk</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -47,6 +54,7 @@
 	<ItemGroup>
 		<None Include="..\..\LICENSE" Pack="true" PackagePath="" />
 		<None Include="..\..\README.md" Pack="true" PackagePath="" />
+		<None Include="icon.png" Pack="true" Visible="false" PackagePath="" />
 	</ItemGroup>
 
 </Project>
