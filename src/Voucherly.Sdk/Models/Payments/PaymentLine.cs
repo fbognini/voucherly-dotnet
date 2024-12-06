@@ -29,9 +29,10 @@ namespace Voucherly.Sdk.Models.Payments
         /// TotalAmount - TotalDiscountAmount - DiscountAmount
         /// </summary>
         public long FinalAmount { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public string ProductImage { get; set; }
+        public double? TaxRate { get; set; }
+        public string ProductName { get; set; } = string.Empty;
+        public string ProductDescription { get; set; } = string.Empty;
+        public string ProductImage { get; set; } = string.Empty;
         public bool IsFood { get; set; }
     }
 }

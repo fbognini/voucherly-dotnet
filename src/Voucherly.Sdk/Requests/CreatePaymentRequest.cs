@@ -12,6 +12,7 @@ namespace Voucherly.Sdk.Requests
             public long UnitAmount { get; set; }
             public long UnitDiscountAmount { get; set; }
             public long DiscountAmount { get; set; }
+            public double? TaxRate { get; set; }
             public int? ProductId { get; set; }
             public string ProductName { get; set; } = string.Empty;
             public string ProductDescription { get; set; } = string.Empty;
@@ -32,20 +33,21 @@ namespace Voucherly.Sdk.Requests
             public int? Index { get; set; }
         }
 
+        public PaymentMode Mode { get; set; }
         public string? ReferenceId { get; set; }
         public int? Timeout { get; set; }
-        public PaymentMode Mode { get; set; }
+        public string? CustomerPaymentMethodId { get; set; }
         public string? CustomerId { get; set; }
         public string CustomerFirstName { get; set; } = default!;
         public string CustomerLastName { get; set; } = default!;
         public string CustomerEmail { get; set; } = default!;
-        public bool IsPartialPayment { get; set; }
+        public bool? IsPartialPayment { get; set; }
         public bool? IsAutoConfirm { get; set; }
         public string? SelectedPaymentGateway { get; set; }
         public List<string> PaymentGateways { get; set; } = new();
-        public string RedirectSuccessUrl { get; set; } = string.Empty;
-        public string RedirectErrorUrl { get; set; } = string.Empty;
-        public string? S2SUrl { get; set; }
+        public string RedirectOkUrl { get; set; } = string.Empty;
+        public string RedirectKoUrl { get; set; } = string.Empty;
+        public string? CallbackUrl { get; set; }
         public string? Language { get; set; }
         public string? Country { get; set; }
         public string? ShippingAddress { get; set; }

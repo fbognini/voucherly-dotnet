@@ -10,8 +10,8 @@ namespace Voucherly.Sdk.Models.Payments
 {
     public class PaymentDiscount
     {
-        public string DiscountName { get; set; }
-        public string DiscountDescription { get; set; }
+        public string DiscountName { get; set; } = string.Empty;
+        public string DiscountDescription { get; set; } = string.Empty;
         public long Amount { get; set; }
         public string? Type { get; set; }
         public long? Value { get; set; }
