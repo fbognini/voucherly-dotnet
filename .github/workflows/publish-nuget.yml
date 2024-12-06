@@ -49,7 +49,7 @@ jobs:
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
-        name: nuget-${{ env.CLEAN_VERSION }}
+        name: nuget
         path: nuget/
 
   publish:
@@ -60,7 +60,7 @@ jobs:
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v4
       with:
-        name: nuget-${{ env.CLEAN_VERSION }}
+        name: nuget
         path: nuget
 
     - name: Setup .NET
