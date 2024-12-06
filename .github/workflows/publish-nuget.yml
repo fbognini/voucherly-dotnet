@@ -8,9 +8,7 @@ on:
 jobs:
   build:
     name: Build and test
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -32,7 +30,7 @@ jobs:
     - name: Validate version format
       run: |
         if [[ ! "$CLEAN_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
-          echo "Invalid version format: CLEAN_VERSION "
+          echo "Invalid version format: $CLEAN_VERSION"
           exit 1
         fi
 
@@ -45,13 +43,13 @@ jobs:
     - name: Pack the NuGet package
       run: |
         dotnet pack --configuration Release --no-build \
-          /p:Version=${{ env.RELEASE_VERSION#v }} \
+          /p:Version=${{ env.CLEAN_VERSION }} \
           --output nuget
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
-        name: nuget
+        name: nuget-${{ env.CLEAN_VERSION }}
         path: nuget/
 
   publish:
@@ -62,12 +60,14 @@ jobs:
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v4
       with:
-        name: nuget
+        name: nuget-${{ env.CLEAN_VERSION }}
         path: nuget
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+
     - name: Publish NuGet packages to NuGet
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
