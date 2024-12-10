@@ -17,8 +17,8 @@
         public string Brand { get; set; } = string.Empty;
         public string Pan { get; set; } = string.Empty;
         public string Expiration { get; set; } = string.Empty;
-        public string ExpirationMonth { get; set; } = string.Empty;
-        public string ExpirationYear { get; set; } = string.Empty;
+        public int ExpirationMonth { get; set; }
+        public int ExpirationYear { get; set; }
         public string? Product { get; set; } = string.Empty;
     }
 
