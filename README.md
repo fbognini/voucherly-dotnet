@@ -44,8 +44,8 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 
 [api-docs]: https://docs.voucherly.it
 [dotnet-core-cli-tools]: https://docs.microsoft.com/en-us/dotnet/core/tools/
-[issues]: https://github.com/voucherly/voucherly-dotnet/issues/new
+[issues]: https://github.com/voucherly/voucherly-dotnet-sdk/issues/new
 [nuget-cli]: https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference
 [package-manager-console]: https://docs.microsoft.com/en-us/nuget/tools/package-manager-console
-[pulls]: https://github.com/voucherly/voucherly-dotnet/pulls
+[pulls]: https://github.com/voucherly/voucherly-dotnet-sdk/pulls
 [voucherly]: https://voucherly.it
