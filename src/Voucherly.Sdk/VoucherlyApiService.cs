@@ -1,6 +1,8 @@
 ﻿using fbognini.Sdk;
 using fbognini.Sdk.Models;
 using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Voucherly.Sdk.Endpoints;
@@ -44,15 +46,23 @@ namespace Voucherly.Sdk
 
     internal class VoucherlyApiService : BaseApiService, IVoucherlyApiService
     {
-        private VoucherlyApiSettings settings;
+        private readonly VoucherlyApiSettings _settings;
 
         public VoucherlyApiService(HttpClient client, IOptions<VoucherlyApiSettings> options)
             : base(client, options: IVoucherlyApiService.JsonSerializerOptions)
         {
-            settings = options.Value;
+            _settings = options.Value;
 
             this.client.BaseAddress = new Uri("https://api.voucherly.it/");
-            this.client.DefaultRequestHeaders.Add("Voucherly-API-Key", settings.ApiKey);
+            this.client.DefaultRequestHeaders.Add("Voucherly-API-Key", _settings.ApiKey);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-os", _settings.Os);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-osversion", _settings.OsVersion);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-osframework", _settings.OsFramework);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-app", _settings.App);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-appversion", _settings.AppVersion);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-apphouse", _settings.AppHouse);
+            this.client.DefaultRequestHeaders.Add("x-voucherly-devicetype", _settings.DeviceType);
+            this.client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VoucherlyApiDotnetSdk", Assembly.GetExecutingAssembly().GetName().Version?.ToString()));
         }
 
         public async Task<Payment> GetPayment(string id, GetPaymentRequest request)
