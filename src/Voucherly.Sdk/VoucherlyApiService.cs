@@ -19,6 +19,7 @@ namespace Voucherly.Sdk
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Converters = { new JsonStringEnumConverter() },
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
         #region Payments
